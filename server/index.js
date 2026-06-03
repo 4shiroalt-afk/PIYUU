@@ -26,6 +26,17 @@ ILOBEYOUHARIPRIYA
 const app = express();
 app.use(express.json({ limit: '50mb' }));
 
+// Enable CORS for cross-domain requests
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 function mediaTypeFromMime(mime) {
   return mime?.startsWith('video/') ? 'video' : 'image';
 }
